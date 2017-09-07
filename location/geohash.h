@@ -6,9 +6,10 @@
 #define LOC_ME_GEOHASH_H
 #include <algorithm>
 #include <cmath>
+// the min epsilon
 #define EPSILON 0.000001
 
-
+// the struction to location things
 struct location{
     double lat;
     double lng;
@@ -28,6 +29,7 @@ inline double operator - (const location &posa, const location &posb){
     return getDistance(posa,posb);
 }
 
+//for next decode or encode
 struct camber_box{
     double min_lat = -90.0;
     double max_lat = 90;
