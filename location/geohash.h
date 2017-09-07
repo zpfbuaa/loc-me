@@ -39,7 +39,9 @@ struct camber_box{
             , min_lng(std::min(lng1,lng2))
             , max_lng(std::max(lng1,lng2))
             {}
-
+    camber_box(long double lat1, long double lat2, long double lng1, long double lng2) {
+        camber_box((double) lat1, (double) lat2, (double) lng1, (double) lng2);
+    }
     camber_box(location posa, location posb)
             : min_lat(std::min(posa.lat, posb.lat))
             , max_lat(std::max(posa.lat, posb.lat))
@@ -53,6 +55,7 @@ struct camber_box{
         max_lng = std::max(max_lng, b.max_lng);
         return *this;
     }
+    camber_box(location loc, double distance);
     bool contains(location posa) const{
         return (posa.lat >= min_lat) && (posa.lat <= max_lat) && (posa.lng >= min_lng) && (posa.lng <= max_lng);
     }
@@ -67,6 +70,7 @@ struct camber_box{
     }
     location center() const { return location{ lat_center(), lng_center() }; }
 
+    double min_span() const;
 };
 
 inline bool operator == (const camber_box &boxa, const camber_box &boxb){
@@ -100,4 +104,13 @@ struct binary_hash{
     }
     bool test(size_t n) const { return (bits & (1ull << (precision-n)))!=0; }
 };
+
+inline bool operator == (const binary_hash &b1, const binary_hash &b2){
+    return b1.empty() ? b2.empty() : (b1.bits == b2.bits && b1.precision == b2.precision);
+}
+
+inline bool operator != (const binary_hash &b1, const binary_hash &b2){
+    return !(b1==b2);
+}
+
 #endif //LOC_ME_GEOHASH_H

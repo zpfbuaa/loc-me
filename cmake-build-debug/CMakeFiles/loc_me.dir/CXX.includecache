@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/pengfei_zheng/Documents/loc-me/location/geohash.cpp
+geohash.h
+/Users/pengfei_zheng/Documents/loc-me/location/geohash.h
+
+/Users/pengfei_zheng/Documents/loc-me/location/geohash.h
+algorithm
+-
+cmath
+-
+
+/Users/pengfei_zheng/Documents/loc-me/main.cpp
+iostream
+-
+

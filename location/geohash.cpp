@@ -40,3 +40,18 @@ double getDistance(const location &posa, const location &posb){
             cos((double)lat1) * cos((double)lat2) * sin((double)lng_degree /2.0) * sin((double)lng_degree /2.0);
     return (double)EARTH_RADIUS * 2.0 * atan2(sqrt((double)a), sqrt((double)(1.0-a)));
 }
+camber_box::camber_box(location loc, double distance) {
+    long double lat_range = degrees(distance/LONGITUDE_CIRCLE);
+    long double max_lat = std::max(std::abs(loc.lat - lat_range), std::abs(loc.lat + lat_range));
+    long double lng_range = degrees(distance/lat_circle(max_lat));
+    *this = camber_box(loc.lat - lat_range,
+                       loc.lat + lat_range,
+                       loc.lng - lng_range,
+                       loc.lng + lng_range);
+}
+double camber_box::min_span() const {
+    return (double)std::min(lat_span(min_lat, max_lat),
+                    std::min(lng_span(min_lat, min_lng, max_lng),
+                             lng_span(max_lat, min_lng, max_lng)));
+}
+
